@@ -1,74 +1,178 @@
-import { Image, StyleSheet, Platform } from 'react-native';
+import React from "react";
+import {
+    View,
+    Text,
+    StyleSheet,
+    ScrollView,
+    TouchableOpacity,
+    ImageBackground,
+} from "react-native";
+import { router } from "expo-router";
+import { FontAwesome5 } from "@expo/vector-icons";
 
-import { HelloWave } from '@/components/HelloWave';
-import ParallaxScrollView from '@/components/ParallaxScrollView';
-import { ThemedText } from '@/components/ThemedText';
-import { ThemedView } from '@/components/ThemedView';
+const HomeScreen = () => {
+    return (
+        <ScrollView style={styles.container}>
+            {/* Hero Section */}
+            <ImageBackground
+                source={require("../../assets/images/Hero.jpg")}
+                style={styles.heroSection}
+            >
+                <View style={styles.heroOverlay}>
+                    <Text style={styles.heroTitle}>Farm Equipment Rental</Text>
+                    <Text style={styles.heroSubtitle}>
+                        Empowering Farmers with Modern Solutions
+                    </Text>
+                </View>
+            </ImageBackground>
 
-export default function HomeScreen() {
-  return (
-    <ParallaxScrollView
-      headerBackgroundColor={{ light: '#A1CEDC', dark: '#1D3D47' }}
-      headerImage={
-        <Image
-          source={require('@/assets/images/partial-react-logo.png')}
-          style={styles.reactLogo}
-        />
-      }>
-      <ThemedView style={styles.titleContainer}>
-        <ThemedText type="title">Welcome!</ThemedText>
-        <HelloWave />
-      </ThemedView>
-      <ThemedView style={styles.stepContainer}>
-        <ThemedText type="subtitle">Step 1: Try it</ThemedText>
-        <ThemedText>
-          Edit <ThemedText type="defaultSemiBold">app/(tabs)/index.tsx</ThemedText> to see changes.
-          Press{' '}
-          <ThemedText type="defaultSemiBold">
-            {Platform.select({
-              ios: 'cmd + d',
-              android: 'cmd + m',
-              web: 'F12'
-            })}
-          </ThemedText>{' '}
-          to open developer tools.
-        </ThemedText>
-      </ThemedView>
-      <ThemedView style={styles.stepContainer}>
-        <ThemedText type="subtitle">Step 2: Explore</ThemedText>
-        <ThemedText>
-          Tap the Explore tab to learn more about what's included in this starter app.
-        </ThemedText>
-      </ThemedView>
-      <ThemedView style={styles.stepContainer}>
-        <ThemedText type="subtitle">Step 3: Get a fresh start</ThemedText>
-        <ThemedText>
-          When you're ready, run{' '}
-          <ThemedText type="defaultSemiBold">npm run reset-project</ThemedText> to get a fresh{' '}
-          <ThemedText type="defaultSemiBold">app</ThemedText> directory. This will move the current{' '}
-          <ThemedText type="defaultSemiBold">app</ThemedText> to{' '}
-          <ThemedText type="defaultSemiBold">app-example</ThemedText>.
-        </ThemedText>
-      </ThemedView>
-    </ParallaxScrollView>
-  );
-}
+            {/* Quick Actions */}
+            <View style={styles.quickActions}>
+                <TouchableOpacity
+                    style={styles.actionButton}
+                    onPress={() => router.push("/bookings")}
+                >
+                    <FontAwesome5 name="tractor" size={24} color="#4CAF50" />
+                    <Text style={styles.actionButtonText}>Book Equipment</Text>
+                </TouchableOpacity>
+                <TouchableOpacity style={styles.actionButton}>
+                    <FontAwesome5 name="users" size={24} color="#4CAF50" />
+                    <Text style={styles.actionButtonText}>Hire Labour</Text>
+                </TouchableOpacity>
+            </View>
+
+            {/* Feature Cards */}
+            <View style={styles.featuresSection}>
+                <TouchableOpacity style={styles.featureCard}>
+                    <FontAwesome5
+                        name="clipboard-list"
+                        size={32}
+                        color="#4CAF50"
+                    />
+                    <Text style={styles.featureTitle}>Register Equipment</Text>
+                    <Text style={styles.featureDescription}>
+                        List your equipment for rental
+                    </Text>
+                </TouchableOpacity>
+
+                <TouchableOpacity style={styles.featureCard}>
+                    <FontAwesome5
+                        name="calendar-check"
+                        size={32}
+                        color="#4CAF50"
+                    />
+                    <Text style={styles.featureTitle}>My Bookings</Text>
+                    <Text style={styles.featureDescription}>
+                        Track your rentals and bookings
+                    </Text>
+                </TouchableOpacity>
+
+                <TouchableOpacity style={styles.featureCard}>
+                    <FontAwesome5
+                        name="map-marked-alt"
+                        size={32}
+                        color="#4CAF50"
+                    />
+                    <Text style={styles.featureTitle}>Nearby Equipment</Text>
+                    <Text style={styles.featureDescription}>
+                        Find equipment in your area
+                    </Text>
+                </TouchableOpacity>
+
+                <TouchableOpacity style={styles.featureCard}>
+                    <FontAwesome5 name="star" size={32} color="#4CAF50" />
+                    <Text style={styles.featureTitle}>Top Rated</Text>
+                    <Text style={styles.featureDescription}>
+                        Best rated equipment and labor
+                    </Text>
+                </TouchableOpacity>
+            </View>
+        </ScrollView>
+    );
+};
 
 const styles = StyleSheet.create({
-  titleContainer: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    gap: 8,
-  },
-  stepContainer: {
-    gap: 8,
-    marginBottom: 8,
-  },
-  reactLogo: {
-    height: 178,
-    width: 290,
-    bottom: 0,
-    left: 0,
-    position: 'absolute',
-  },
+    container: {
+        flex: 1,
+        backgroundColor: "#f5f5f5",
+    },
+    heroSection: {
+        height: 200,
+        justifyContent: "center",
+    },
+    heroOverlay: {
+        backgroundColor: "rgba(0,0,0,0.4)",
+        padding: 20,
+        height: "100%",
+        justifyContent: "center",
+    },
+    heroTitle: {
+        fontSize: 32,
+        fontWeight: "bold",
+        color: "#ffffff",
+        textAlign: "center",
+    },
+    heroSubtitle: {
+        fontSize: 16,
+        color: "#ffffff",
+        textAlign: "center",
+        marginTop: 8,
+    },
+    quickActions: {
+        flexDirection: "row",
+        justifyContent: "space-around",
+        padding: 20,
+        backgroundColor: "#ffffff",
+        marginTop: -20,
+        marginHorizontal: 20,
+        borderRadius: 10,
+        elevation: 4,
+        shadowColor: "#000",
+        shadowOffset: { width: 0, height: 2 },
+        shadowOpacity: 0.25,
+        shadowRadius: 3.84,
+    },
+    actionButton: {
+        alignItems: "center",
+        padding: 15,
+    },
+    actionButtonText: {
+        marginTop: 8,
+        color: "#333",
+        fontWeight: "600",
+    },
+    featuresSection: {
+        flexDirection: "row",
+        flexWrap: "wrap",
+        padding: 10,
+        justifyContent: "space-between",
+        marginTop: 20,
+    },
+    featureCard: {
+        backgroundColor: "#ffffff",
+        width: "47%",
+        padding: 20,
+        borderRadius: 10,
+        marginBottom: 15,
+        alignItems: "center",
+        elevation: 3,
+        shadowColor: "#000",
+        shadowOffset: { width: 0, height: 1 },
+        shadowOpacity: 0.22,
+        shadowRadius: 2.22,
+    },
+    featureTitle: {
+        fontSize: 16,
+        fontWeight: "bold",
+        color: "#333",
+        marginTop: 10,
+    },
+    featureDescription: {
+        fontSize: 12,
+        color: "#666",
+        textAlign: "center",
+        marginTop: 5,
+    },
 });
+
+export default HomeScreen;
