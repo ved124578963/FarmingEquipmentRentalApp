@@ -18,9 +18,22 @@ export default function RootLayout() {
                     }}
                 />
                 <Stack.Screen
+                    name="rentEquipment/[id]"
+                    options={{
+                        headerShown: true,
+                        title: "Rent Equipment",
+                    }}
+                />
+                <Stack.Screen
                     name="login"
                     options={{
-                        headerShown: false,
+                        headerShown: true,
+                        title: "Rent Equipment",
+                        headerStyle: {
+                            backgroundColor: "#4CAF50",
+                        },
+                        headerTintColor: "#fff",
+                        presentation: "card",
                     }}
                 />
                 <Stack.Screen
@@ -34,6 +47,18 @@ export default function RootLayout() {
                     options={{
                         headerShown: true,
                         title: "Book Equipments",
+                        headerStyle: {
+                            backgroundColor: "#4CAF50",
+                        },
+                        headerTintColor: "#fff",
+                        presentation: "card",
+                    }}
+                />
+                <Stack.Screen
+                    name="registerEquipment"
+                    options={{
+                        headerShown: true,
+                        title: "Register Equipments",
                         headerStyle: {
                             backgroundColor: "#4CAF50",
                         },

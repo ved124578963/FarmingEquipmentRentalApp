@@ -43,7 +43,10 @@ const HomeScreen = () => {
 
             {/* Feature Cards */}
             <View style={styles.featuresSection}>
-                <TouchableOpacity style={styles.featureCard}>
+                <TouchableOpacity
+                    style={styles.featureCard}
+                    onPress={() => router.push("/registerEquipment")}
+                >
                     <FontAwesome5
                         name="clipboard-list"
                         size={32}
