@@ -58,7 +58,10 @@ const HomeScreen = () => {
                     </Text>
                 </TouchableOpacity>
 
-                <TouchableOpacity style={styles.featureCard}>
+                <TouchableOpacity
+                    style={styles.featureCard}
+                    onPress={() => router.push("/mybookings")}
+                >
                     <FontAwesome5
                         name="calendar-check"
                         size={32}

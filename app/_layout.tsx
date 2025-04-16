@@ -66,6 +66,42 @@ export default function RootLayout() {
                         presentation: "card",
                     }}
                 />
+                <Stack.Screen
+                    name="myEquipments"
+                    options={{
+                        headerShown: true,
+                        title: "Equipments For Rent",
+                        headerStyle: {
+                            backgroundColor: "#4CAF50",
+                        },
+                        headerTintColor: "#fff",
+                        presentation: "card",
+                    }}
+                />
+                <Stack.Screen
+                    name="mybookings"
+                    options={{
+                        headerShown: true,
+                        title: "My Bookings",
+                        headerStyle: {
+                            backgroundColor: "#4CAF50",
+                        },
+                        headerTintColor: "#fff",
+                        presentation: "card",
+                    }}
+                />
+                <Stack.Screen
+                    name="bookingrequests"
+                    options={{
+                        headerShown: true,
+                        title: "Requests",
+                        headerStyle: {
+                            backgroundColor: "#4CAF50",
+                        },
+                        headerTintColor: "#fff",
+                        presentation: "card",
+                    }}
+                />
             </Stack>
         </UserProvider>
     );
