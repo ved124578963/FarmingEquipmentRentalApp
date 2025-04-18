@@ -1,56 +1,59 @@
-import { View, Text, TouchableOpacity, StyleSheet } from "react-native";
 import React from "react";
-import { useNavigation } from "@react-navigation/native";
+import { View, Text, TouchableOpacity, StyleSheet } from "react-native";
 import { router } from "expo-router";
 
 const HomeScreen = () => {
-    const navigation = useNavigation();
+  return (
+    <View style={styles.container}>
+      <Text style={styles.title}>Welcome to Farm Equipment Rental</Text>
 
-    return (
-        <View style={styles.container}>
-            <Text style={styles.title}>Welcome to Farmer Rental</Text>
-            <TouchableOpacity
-                style={styles.button}
-                onPress={() => router.push("/login")}
-            >
-                <Text style={styles.buttonText}>Login</Text>
-            </TouchableOpacity>
-            <TouchableOpacity
-                style={styles.button}
-                onPress={() => router.push("/signup")}
-            >
-                <Text style={styles.buttonText}>Signup</Text>
-            </TouchableOpacity>
-        </View>
-    );
+      {/* Login Button */}
+      <TouchableOpacity
+        style={styles.button}
+        onPress={() => router.push("/login")}
+      >
+        <Text style={styles.buttonText}>Login</Text>
+      </TouchableOpacity>
+
+      {/* Sign Up Button */}
+      <TouchableOpacity
+        style={styles.button}
+        onPress={() => router.push("/signup")}  // Can be dynamically set based on role
+      >
+        <Text style={styles.buttonText}>Sign Up</Text>
+      </TouchableOpacity>
+    </View>
+  );
 };
 
 const styles = StyleSheet.create({
-    container: {
-        flex: 1,
-        justifyContent: "center",
-        alignItems: "center",
-        backgroundColor: "#f5f5f5",
-    },
-    title: {
-        fontSize: 24,
-        fontWeight: "bold",
-        marginBottom: 20,
-        color: "#4CAF50",
-    },
-    button: {
-        backgroundColor: "#4CAF50",
-        padding: 15,
-        borderRadius: 5,
-        marginVertical: 10,
-        width: "80%",
-        alignItems: "center",
-    },
-    buttonText: {
-        color: "#fff",
-        fontWeight: "bold",
-        fontSize: 16,
-    },
+  container: {
+    flex: 1,
+    justifyContent: "center",
+    alignItems: "center",
+    padding: 20,
+    backgroundColor: "#f5f5f5",
+  },
+  title: {
+    fontSize: 24,
+    fontWeight: "bold",
+    marginBottom: 40,
+    color: "#4CAF50",
+    textAlign: "center",
+  },
+  button: {
+    backgroundColor: "#4CAF50",
+    padding: 15,
+    borderRadius: 5,
+    marginBottom: 15,
+    alignItems: "center",
+    width: "100%",
+  },
+  buttonText: {
+    color: "#fff",
+    fontSize: 16,
+    fontWeight: "bold",
+  },
 });
 
 export default HomeScreen;

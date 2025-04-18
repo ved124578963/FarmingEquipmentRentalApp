@@ -91,6 +91,18 @@ export default function RootLayout() {
                     }}
                 />
                 <Stack.Screen
+                    name="labor/SearchLabor"
+                    options={{
+                        headerShown: true,
+                        title: "Hire Labour",
+                        headerStyle: {
+                            backgroundColor: "#4CAF50",
+                        },
+                        headerTintColor: "#fff",
+                        presentation: "card",
+                    }}
+                />
+                <Stack.Screen
                     name="bookingrequests"
                     options={{
                         headerShown: true,

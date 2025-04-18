@@ -1,6 +1,8 @@
 import React, { useState } from "react";
 import { router } from "expo-router";
 import { useUser } from "./context/UserContext";
+import { Feather } from "@expo/vector-icons";
+
 import {
     View,
     Text,
@@ -118,20 +120,25 @@ const Login = () => {
                     />
                 )}
                 <View style={styles.passwordContainer}>
-                    <TextInput
-                        style={styles.input}
-                        placeholder="Password"
-                        secureTextEntry={!isPasswordVisible}
-                        value={password}
-                        onChangeText={setPassword}
-                    />
-                    <TouchableOpacity
-                        style={styles.togglePassword}
-                        onPress={() => setIsPasswordVisible(!isPasswordVisible)}
-                    >
-                        <Text>{isPasswordVisible ? "Hide" : "Show"}</Text>
-                    </TouchableOpacity>
-                </View>
+    <TextInput
+        style={styles.input}
+        placeholder="Password"
+        secureTextEntry={!isPasswordVisible}
+        value={password}
+        onChangeText={setPassword}
+    />
+    <TouchableOpacity
+        style={styles.togglePassword}
+        onPress={() => setIsPasswordVisible(!isPasswordVisible)}
+    >
+        <Feather
+            name={isPasswordVisible ? "eye-off" : "eye"}
+            size={20}
+            color="#777"
+        />
+    </TouchableOpacity>
+</View>
+
                 <TouchableOpacity
                     style={styles.forgotPassword}
                     //onPress={() => navigation.navigate("ForgotPassword")}

@@ -1,270 +1,212 @@
 import React, { useState } from "react";
-import {
-    View,
-    Text,
-    TextInput,
-    TouchableOpacity,
-    StyleSheet,
-    Alert,
-    ScrollView,
-    ActivityIndicator,
-} from "react-native";
+import { View, Text, TextInput, TouchableOpacity, StyleSheet, ScrollView, ActivityIndicator, Alert } from "react-native";
 import axios from "axios";
 import { router } from "expo-router";
 
-const SignupForm = () => {
-    const [formData, setFormData] = useState({
-        username: "",
-        password: "",
-        firstName: "",
-        middleName: "",
-        lastName: "",
-        country: "India",
-        state: "",
-        district: "",
-        taluka: "",
-        village: "",
-        pincode: "",
-        longitude: "",
-        latitude: "",
-        dob: "",
-        landmark: "",
-        mobileNumber: "",
-        email: "",
-        profileImgId: null,
-    });
+const Signup = () => {
+  const [selectedRole, setSelectedRole] = useState("farmer");
+  const [loading, setLoading] = useState(false);
+  const [formData, setFormData] = useState({});
+  const [error, setError] = useState("");
 
-    const [loading, setLoading] = useState(false);
+  const handleInputChange = (field, value) => {
+    setFormData((prev) => ({ ...prev, [field]: value }));
+  };
 
-    const handleChange = (name: string, value: string) => {
-        setFormData({ ...formData, [name]: value });
-    };
+  const handleSignup = async () => {
+    setLoading(true);
+    setError("");
+    try {
+      const endpoint =
+        selectedRole === "farmer"
+          ? "https://famerequipmentrental-springboot-production.up.railway.app/farmer/register"
+          : "https://famerequipmentrental-springboot-production.up.railway.app/labor/register";
 
-    const handleSubmit = async () => {
-        setLoading(true);
+      await axios.post(endpoint, formData);
+      Alert.alert("Signup Successful", "Please login now.");
+      router.replace("/login");
+    } catch (err) {
+      setError("An error occurred. Please try again.");
+    } finally {
+      setLoading(false);
+    }
+  };
 
-        try {
-            // Prepare data for registration
-            const registrationData = {
-                ...formData,
-                totalEquipment: 0,
-                ratingAsGiver: 0.0,
-                ratingAsTaker: 0.0,
-                totalRentalsGiven: 0,
-                totalRentalsTaken: 0,
-                totalRewards: 0,
-            };
+  return (
+    <ScrollView contentContainerStyle={styles.container}>
+      <View style={styles.formContainer}>
+        <Text style={styles.title}>FarmRent</Text>
+        <View style={styles.roleSelection}>
+          <TouchableOpacity
+            style={[styles.roleButton, selectedRole === "farmer" && styles.selectedRoleButton]}
+            onPress={() => setSelectedRole("farmer")}
+          >
+            <Text style={[styles.roleButtonText, selectedRole === "farmer" && styles.selectedRoleButtonText]}>Farmer</Text>
+          </TouchableOpacity>
+          <TouchableOpacity
+            style={[styles.roleButton, selectedRole === "labor" && styles.selectedRoleButton]}
+            onPress={() => setSelectedRole("labor")}
+          >
+            <Text style={[styles.roleButtonText, selectedRole === "labor" && styles.selectedRoleButtonText]}>Laborer</Text>
+          </TouchableOpacity>
+        </View>
 
-            // Register the farmer
-            const response = await axios.post(
-                "https://famerequipmentrental-springboot-production.up.railway.app/farmer/register",
-                registrationData
-            );
+        {error ? <Text style={styles.errorText}>{error}</Text> : null}
 
-            Alert.alert("Success", "Registration successful!");
-            setFormData({
-                username: "",
-                password: "",
-                firstName: "",
-                middleName: "",
-                lastName: "",
-                country: "India",
-                state: "",
-                district: "",
-                taluka: "",
-                village: "",
-                pincode: "",
-                longitude: "",
-                latitude: "",
-                dob: "",
-                landmark: "",
-                mobileNumber: "",
-                email: "",
-                profileImgId: null,
-            });
-            router.push("/login"); // Navigate to the login page
-        } catch (err) {
-            Alert.alert("Error", "Error registering farmer. Please try again.");
-        } finally {
-            setLoading(false);
-        }
-    };
-
-    return (
-        <ScrollView contentContainerStyle={styles.container}>
-            <Text style={styles.title}>Signup</Text>
-
-            {/* Name Section */}
-            <Text style={styles.sectionTitle}>Basic Information</Text>
-            <View style={styles.row}>
-                <TextInput
-                    style={styles.input}
-                    placeholder="First Name"
-                    value={formData.firstName}
-                    onChangeText={(value) => handleChange("firstName", value)}
-                />
-                <TextInput
-                    style={styles.input}
-                    placeholder="Middle Name"
-                    value={formData.middleName}
-                    onChangeText={(value) => handleChange("middleName", value)}
-                />
-                <TextInput
-                    style={styles.input}
-                    placeholder="Last Name"
-                    value={formData.lastName}
-                    onChangeText={(value) => handleChange("lastName", value)}
-                />
-            </View>
-
-            {/* Username and Password */}
-            <TextInput
+        {selectedRole === "farmer" ? (
+          <>
+            {[
+              "username",
+              "password",
+              "firstName",
+              "middleName",
+              "lastName",
+              "country",
+              "state",
+              "district",
+              "taluka",
+              "village",
+              "pincode",
+              "longitude",
+              "latitude",
+              "dob",
+              "landmark",
+              "mobileNumber",
+              "email",
+              "profileImgId",
+            ].map((field) => (
+              <TextInput
+                key={field}
+                placeholder={field}
                 style={styles.input}
-                placeholder="Username"
-                value={formData.username}
-                onChangeText={(value) => handleChange("username", value)}
-            />
-            <TextInput
+                value={formData[field] || ""}
+                onChangeText={(text) => handleInputChange(field, text)}
+              />
+            ))}
+          </>
+        ) : (
+          <>
+            {[
+              "name",
+              "skills",
+              "experience",
+              "pricePerDay",
+              "location",
+              "pincode",
+              "longitude",
+              "latitude",
+              "imageIds",
+              "email",
+              "password",
+            ].map((field) => (
+              <TextInput
+                key={field}
+                placeholder={field}
                 style={styles.input}
-                placeholder="Password"
-                secureTextEntry
-                value={formData.password}
-                onChangeText={(value) => handleChange("password", value)}
-            />
+                value={formData[field] || ""}
+                onChangeText={(text) => handleInputChange(field, text)}
+              />
+            ))}
+          </>
+        )}
 
-            {/* Date of Birth */}
-            <TextInput
-                style={styles.input}
-                placeholder="Date of Birth (YYYY-MM-DD)"
-                value={formData.dob}
-                onChangeText={(value) => handleChange("dob", value)}
-            />
+        <TouchableOpacity
+          style={[styles.button, loading && styles.disabledButton]}
+          onPress={handleSignup}
+          disabled={loading}
+        >
+          {loading ? <ActivityIndicator color="#fff" /> : <Text style={styles.buttonText}>Sign Up</Text>}
+        </TouchableOpacity>
 
-            {/* Email and Mobile Number */}
-            <Text style={styles.sectionTitle}>Contact Information</Text>
-            <TextInput
-                style={styles.input}
-                placeholder="Email"
-                value={formData.email}
-                onChangeText={(value) => handleChange("email", value)}
-            />
-            <TextInput
-                style={styles.input}
-                placeholder="Mobile Number"
-                value={formData.mobileNumber}
-                onChangeText={(value) => handleChange("mobileNumber", value)}
-            />
-
-            {/* Address Section */}
-            <Text style={styles.sectionTitle}>Address</Text>
-            <TextInput
-                style={styles.input}
-                placeholder="State"
-                value={formData.state}
-                onChangeText={(value) => handleChange("state", value)}
-            />
-            <TextInput
-                style={styles.input}
-                placeholder="District"
-                value={formData.district}
-                onChangeText={(value) => handleChange("district", value)}
-            />
-            <TextInput
-                style={styles.input}
-                placeholder="Taluka"
-                value={formData.taluka}
-                onChangeText={(value) => handleChange("taluka", value)}
-            />
-            <TextInput
-                style={styles.input}
-                placeholder="Village"
-                value={formData.village}
-                onChangeText={(value) => handleChange("village", value)}
-            />
-            <TextInput
-                style={styles.input}
-                placeholder="Landmark"
-                value={formData.landmark}
-                onChangeText={(value) => handleChange("landmark", value)}
-            />
-
-            {/* Submit Button */}
-            <TouchableOpacity
-                style={[styles.button, loading && styles.disabledButton]}
-                onPress={handleSubmit}
-                disabled={loading}
-            >
-                {loading ? (
-                    <ActivityIndicator color="#fff" />
-                ) : (
-                    <Text style={styles.buttonText}>Register</Text>
-                )}
-            </TouchableOpacity>
-
-            <TouchableOpacity onPress={() => router.push("/login")}>
-                <Text style={styles.linkText}>
-                    Already have an account? Login
-                </Text>
-            </TouchableOpacity>
-        </ScrollView>
-    );
+        <Text style={styles.footerText}>
+          Already have an account? <Text style={styles.linkText} onPress={() => router.replace("/login")}>Login</Text>
+        </Text>
+      </View>
+    </ScrollView>
+  );
 };
 
 const styles = StyleSheet.create({
-    container: {
-        flexGrow: 1,
-        padding: 20,
-        backgroundColor: "#f5f5f5",
-    },
-    title: {
-        fontSize: 24,
-        fontWeight: "bold",
-        textAlign: "center",
-        marginBottom: 20,
-        color: "#4CAF50",
-    },
-    sectionTitle: {
-        fontSize: 18,
-        fontWeight: "bold",
-        marginBottom: 10,
-        color: "#4CAF50",
-    },
-    row: {
-        flexDirection: "row",
-        justifyContent: "space-between",
-        marginBottom: 10,
-    },
-    input: {
-        borderWidth: 1,
-        borderColor: "#ccc",
-        borderRadius: 5,
-        padding: 10,
-        marginBottom: 10,
-        backgroundColor: "#fff",
-        flex: 1,
-        marginHorizontal: 5,
-    },
-    button: {
-        backgroundColor: "#4CAF50",
-        padding: 15,
-        borderRadius: 5,
-        alignItems: "center",
-        marginTop: 20,
-    },
-    disabledButton: {
-        backgroundColor: "#a5d6a7",
-    },
-    buttonText: {
-        color: "#fff",
-        fontWeight: "bold",
-        fontSize: 16,
-    },
-    linkText: {
-        color: "#4CAF50",
-        textAlign: "center",
-        marginTop: 20,
-        textDecorationLine: "underline",
-    },
+  container: {
+    flexGrow: 1,
+    justifyContent: "center",
+    alignItems: "center",
+    backgroundColor: "#f5f5f5",
+    padding: 20,
+  },
+  formContainer: {
+    width: "100%",
+    padding: 20,
+    backgroundColor: "#fff",
+    borderRadius: 10,
+    shadowColor: "#000",
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.2,
+    shadowRadius: 4,
+    elevation: 5,
+  },
+  title: {
+    fontSize: 24,
+    fontWeight: "bold",
+    textAlign: "center",
+    marginBottom: 20,
+    color: "#4CAF50",
+  },
+  roleSelection: {
+    flexDirection: "row",
+    justifyContent: "center",
+    marginBottom: 20,
+  },
+  roleButton: {
+    padding: 10,
+    borderRadius: 5,
+    backgroundColor: "#e0e0e0",
+    marginHorizontal: 5,
+  },
+  selectedRoleButton: {
+    backgroundColor: "#4CAF50",
+  },
+  roleButtonText: {
+    color: "#000",
+  },
+  selectedRoleButtonText: {
+    color: "#fff",
+  },
+  errorText: {
+    color: "red",
+    textAlign: "center",
+    marginBottom: 10,
+  },
+  input: {
+    borderWidth: 1,
+    borderColor: "#ccc",
+    borderRadius: 5,
+    padding: 10,
+    marginBottom: 10,
+    backgroundColor: "#fff",
+  },
+  button: {
+    backgroundColor: "#4CAF50",
+    padding: 15,
+    borderRadius: 5,
+    alignItems: "center",
+  },
+  disabledButton: {
+    backgroundColor: "#a5d6a7",
+  },
+  buttonText: {
+    color: "#fff",
+    fontWeight: "bold",
+  },
+  footerText: {
+    textAlign: "center",
+    marginTop: 20,
+    color: "#777",
+  },
+  linkText: {
+    color: "#4CAF50",
+    textDecorationLine: "underline",
+  },
 });
 
-export default SignupForm;
+export default Signup;

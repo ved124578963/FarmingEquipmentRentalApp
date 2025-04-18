@@ -8,7 +8,7 @@ import {
     ImageBackground,
 } from "react-native";
 import { router } from "expo-router";
-import { FontAwesome5 } from "@expo/vector-icons";
+import { FontAwesome5, MaterialIcons, MaterialCommunityIcons } from "@expo/vector-icons";
 
 const HomeScreen = () => {
     return (
@@ -35,7 +35,10 @@ const HomeScreen = () => {
                     <FontAwesome5 name="tractor" size={24} color="#4CAF50" />
                     <Text style={styles.actionButtonText}>Book Equipment</Text>
                 </TouchableOpacity>
-                <TouchableOpacity style={styles.actionButton}>
+                <TouchableOpacity
+                    style={styles.actionButton}
+                    onPress={() => router.push("/labor/SearchLabor")}
+                >
                     <FontAwesome5 name="users" size={24} color="#4CAF50" />
                     <Text style={styles.actionButtonText}>Hire Labour</Text>
                 </TouchableOpacity>
@@ -73,7 +76,10 @@ const HomeScreen = () => {
                     </Text>
                 </TouchableOpacity>
 
-                <TouchableOpacity style={styles.featureCard}>
+                <TouchableOpacity
+                    style={styles.featureCard}
+                    onPress={() => router.push("/getrecommendation")}
+                >
                     <FontAwesome5
                         name="map-marked-alt"
                         size={32}
@@ -90,6 +96,30 @@ const HomeScreen = () => {
                     <Text style={styles.featureTitle}>Top Rated</Text>
                     <Text style={styles.featureDescription}>
                         Best rated equipment and labor
+                    </Text>
+                </TouchableOpacity>
+
+                {/* New Card - Chatbot */}
+                <TouchableOpacity
+                    style={styles.featureCard}
+                    onPress={() => router.push("/chatbot")}
+                >
+                    <MaterialIcons name="chat-bubble-outline" size={32} color="#4CAF50" />
+                    <Text style={styles.featureTitle}>Chatbot Assistant</Text>
+                    <Text style={styles.featureDescription}>
+                        Get quick help with your queries
+                    </Text>
+                </TouchableOpacity>
+
+                {/* New Card - Voice Assistant */}
+                <TouchableOpacity
+                    style={styles.featureCard}
+                    onPress={() => router.push("/voiceassistant")}
+                >
+                    <MaterialCommunityIcons name="microphone-outline" size={32} color="#4CAF50" />
+                    <Text style={styles.featureTitle}>Voice Assistant</Text>
+                    <Text style={styles.featureDescription}>
+                        Speak to get help on the go
                     </Text>
                 </TouchableOpacity>
             </View>
