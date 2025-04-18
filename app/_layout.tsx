@@ -102,6 +102,18 @@ export default function RootLayout() {
                         presentation: "card",
                     }}
                 />
+                 <Stack.Screen
+                    name="chatbot/ChatButton"
+                    options={{
+                        headerShown: true,
+                        title: "Agrobot",
+                        headerStyle: {
+                            backgroundColor: "#4CAF50",
+                        },
+                        headerTintColor: "#fff",
+                        presentation: "card",
+                    }}
+                />
                 <Stack.Screen
                     name="bookingrequests"
                     options={{

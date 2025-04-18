@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { View, TouchableOpacity, StyleSheet, Modal } from "react-native";
 import { Ionicons } from "@expo/vector-icons"; // This matches IoChatboxEllipsesOutline
-import ChatWindow from "../ChatBot/ChatWindow"; // Make sure this is a React Native component
+import ChatWindow from "./ChatWindow"; // Make sure this is a React Native component
 
 const ChatButton = () => {
     const [isOpen, setIsOpen] = useState(false);

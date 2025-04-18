@@ -102,10 +102,10 @@ const HomeScreen = () => {
                 {/* New Card - Chatbot */}
                 <TouchableOpacity
                     style={styles.featureCard}
-                    onPress={() => router.push("/chatbot")}
+                    onPress={() => router.push("/chatbot/ChatButton")}
                 >
                     <MaterialIcons name="chat-bubble-outline" size={32} color="#4CAF50" />
-                    <Text style={styles.featureTitle}>Chatbot Assistant</Text>
+                    <Text style={styles.featureTitle}>Agrobot</Text>
                     <Text style={styles.featureDescription}>
                         Get quick help with your queries
                     </Text>
