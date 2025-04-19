@@ -29,7 +29,7 @@ const Profile = () => {
             showsVerticalScrollIndicator={false}
         >
             <View style={styles.contentContainer}>
-                {/* Enhanced Profile Card */}
+                {/* Profile Card */}
                 <View style={styles.profileCard}>
                     <View style={styles.avatarContainer}>
                         <Image
@@ -70,87 +70,56 @@ const Profile = () => {
                         style={styles.actionCard}
                         onPress={() => router.push("/myEquipments")}
                     >
-                        <Ionicons
-                            name="cart-outline"
-                            size={24}
-                            color="#4CAF50"
-                        />
+                        <Ionicons name="cart-outline" size={24} color="#4CAF50" />
                         <Text style={styles.actionText}>My Rentals</Text>
-                        <Ionicons
-                            name="chevron-forward"
-                            size={24}
-                            color="#666"
-                        />
+                        <Ionicons name="chevron-forward" size={24} color="#666" />
                     </TouchableOpacity>
 
                     <TouchableOpacity
                         style={styles.actionCard}
                         onPress={() => router.push("/bookingrequests")}
                     >
-                        <Ionicons
-                            name="time-outline"
-                            size={24}
-                            color="#4CAF50"
-                        />
+                        <Ionicons name="time-outline" size={24} color="#4CAF50" />
                         <Text style={styles.actionText}>My Requests</Text>
-                        <Ionicons
-                            name="chevron-forward"
-                            size={24}
-                            color="#666"
-                        />
+                        <Ionicons name="chevron-forward" size={24} color="#666" />
                     </TouchableOpacity>
 
                     <TouchableOpacity
                         style={styles.actionCard}
                         onPress={() => router.push("/invite")}
                     >
-                        <Ionicons
-                            name="share-social-outline"
-                            size={24}
-                            color="#4CAF50"
-                        />
+                        <Ionicons name="share-social-outline" size={24} color="#4CAF50" />
                         <Text style={styles.actionText}>Invite Others</Text>
-                        <Ionicons
-                            name="chevron-forward"
-                            size={24}
-                            color="#666"
-                        />
+                        <Ionicons name="chevron-forward" size={24} color="#666" />
+                    </TouchableOpacity>
+
+                    <TouchableOpacity
+                        style={styles.actionCard}
+                        onPress={() => router.push("/labor/MyProfile")}
+                    >
+                        <Ionicons name="person-circle-outline" size={24} color="#4CAF50" />
+                        <Text style={styles.actionText}>My Profile</Text>
+                        <Ionicons name="chevron-forward" size={24} color="#666" />
                     </TouchableOpacity>
 
                     <TouchableOpacity
                         style={styles.actionCard}
                         onPress={() => router.push("/settings")}
                     >
-                        <Ionicons
-                            name="settings-outline"
-                            size={24}
-                            color="#4CAF50"
-                        />
+                        <Ionicons name="settings-outline" size={24} color="#4CAF50" />
                         <Text style={styles.actionText}>Settings</Text>
-                        <Ionicons
-                            name="chevron-forward"
-                            size={24}
-                            color="#666"
-                        />
+                        <Ionicons name="chevron-forward" size={24} color="#666" />
                     </TouchableOpacity>
 
                     <TouchableOpacity
                         style={[styles.actionCard, styles.logout]}
                         onPress={() => router.push("/login")}
                     >
-                        <Ionicons
-                            name="log-out-outline"
-                            size={24}
-                            color="#d32f2f"
-                        />
+                        <Ionicons name="log-out-outline" size={24} color="#d32f2f" />
                         <Text style={[styles.actionText, styles.logoutText]}>
                             Logout
                         </Text>
-                        <Ionicons
-                            name="chevron-forward"
-                            size={24}
-                            color="#d32f2f"
-                        />
+                        <Ionicons name="chevron-forward" size={24} color="#d32f2f" />
                     </TouchableOpacity>
                 </View>
             </View>

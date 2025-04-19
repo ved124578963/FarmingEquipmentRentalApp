@@ -62,17 +62,25 @@ const VoiceAssistant = () => {
   const uploadAudio = async (uri: string) => {
     try {
       setLoading(true);
-      const user = JSON.parse(await AsyncStorage.getItem("user"));
+      const userString = await AsyncStorage.getItem("user");
+      const user = userString ? JSON.parse(userString) : null;
+  
+      if (!user || !user.id) {
+        Alert.alert("Error", "User information is missing.");
+        setLoading(false);
+        return;
+      }
+  
       const fileName = uri.split("/").pop();
       const formData = new FormData();
-
+  
       formData.append("file", {
         uri,
-        type: "audio/webm", // or "audio/x-wav" based on backend support
+        type: "audio/x-m4a", // or "audio/x-wav" based on backend support
         name: fileName || "recording.webm",
       });
       formData.append("data", JSON.stringify({ farmerId: user.id }));
-
+  
       const response = await axios.post(
         "https://famerequipmentrental-springboot-production.up.railway.app/voice-assistant/audio",
         formData,
@@ -80,14 +88,23 @@ const VoiceAssistant = () => {
           headers: {
             "Content-Type": "multipart/form-data",
           },
-          responseType: "blob",
+          responseType: "arraybuffer",
         }
       );
+  
+      const { writeAsStringAsync, documentDirectory } = require("expo-file-system");
+      const { Buffer } = require("buffer"); // Import Buffer to handle ArrayBuffer to Base64 conversion
 
-      const blob = new Blob([response.data], { type: "audio/mpeg" });
+      // Convert ArrayBuffer to Base64
+      const base64Data = Buffer.from(response.data).toString("base64");
+
+      const filePath = `${documentDirectory}${fileName || "response.mp3"}`;
+      await writeAsStringAsync(filePath, base64Data, {
+        encoding: "base64",
+      });
+  
       const soundObject = new Audio.Sound();
-      const playbackUri = URL.createObjectURL(blob);
-      await soundObject.loadAsync({ uri: playbackUri });
+      await soundObject.loadAsync({ uri: filePath });
       await soundObject.playAsync();
       Alert.alert("Success", "Response played successfully!");
     } catch (error) {

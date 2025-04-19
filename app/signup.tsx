@@ -1,7 +1,17 @@
 import React, { useState } from "react";
-import { View, Text, TextInput, TouchableOpacity, StyleSheet, ScrollView, ActivityIndicator, Alert } from "react-native";
+import {
+  View,
+  Text,
+  TextInput,
+  TouchableOpacity,
+  StyleSheet,
+  ScrollView,
+  ActivityIndicator,
+  Alert,
+} from "react-native";
 import axios from "axios";
 import { router } from "expo-router";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 const Signup = () => {
   const [selectedRole, setSelectedRole] = useState("farmer");
@@ -22,7 +32,8 @@ const Signup = () => {
           ? "https://famerequipmentrental-springboot-production.up.railway.app/farmer/register"
           : "https://famerequipmentrental-springboot-production.up.railway.app/labor/register";
 
-      await axios.post(endpoint, formData);
+      const response = await axios.post(endpoint, formData);
+      await AsyncStorage.setItem("user", JSON.stringify(response.data.user));
       Alert.alert("Signup Successful", "Please login now.");
       router.replace("/login");
     } catch (err) {
@@ -38,16 +49,36 @@ const Signup = () => {
         <Text style={styles.title}>FarmRent</Text>
         <View style={styles.roleSelection}>
           <TouchableOpacity
-            style={[styles.roleButton, selectedRole === "farmer" && styles.selectedRoleButton]}
+            style={[
+              styles.roleButton,
+              selectedRole === "farmer" && styles.selectedRoleButton,
+            ]}
             onPress={() => setSelectedRole("farmer")}
           >
-            <Text style={[styles.roleButtonText, selectedRole === "farmer" && styles.selectedRoleButtonText]}>Farmer</Text>
+            <Text
+              style={[
+                styles.roleButtonText,
+                selectedRole === "farmer" && styles.selectedRoleButtonText,
+              ]}
+            >
+              Farmer
+            </Text>
           </TouchableOpacity>
           <TouchableOpacity
-            style={[styles.roleButton, selectedRole === "labor" && styles.selectedRoleButton]}
+            style={[
+              styles.roleButton,
+              selectedRole === "labor" && styles.selectedRoleButton,
+            ]}
             onPress={() => setSelectedRole("labor")}
           >
-            <Text style={[styles.roleButtonText, selectedRole === "labor" && styles.selectedRoleButtonText]}>Laborer</Text>
+            <Text
+              style={[
+                styles.roleButtonText,
+                selectedRole === "labor" && styles.selectedRoleButtonText,
+              ]}
+            >
+              Laborer
+            </Text>
           </TouchableOpacity>
         </View>
 
@@ -115,11 +146,21 @@ const Signup = () => {
           onPress={handleSignup}
           disabled={loading}
         >
-          {loading ? <ActivityIndicator color="#fff" /> : <Text style={styles.buttonText}>Sign Up</Text>}
+          {loading ? (
+            <ActivityIndicator color="#fff" />
+          ) : (
+            <Text style={styles.buttonText}>Sign Up</Text>
+          )}
         </TouchableOpacity>
 
         <Text style={styles.footerText}>
-          Already have an account? <Text style={styles.linkText} onPress={() => router.replace("/login")}>Login</Text>
+          Already have an account?{" "}
+          <Text
+            style={styles.linkText}
+            onPress={() => router.replace("/login")}
+          >
+            Login
+          </Text>
         </Text>
       </View>
     </ScrollView>

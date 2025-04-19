@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { router } from "expo-router";
 import { useUser } from "./context/UserContext";
 import { Feather } from "@expo/vector-icons";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 import {
     View,
@@ -43,11 +44,12 @@ const Login = () => {
             if (response.status === 200) {
                 // Store user data and role
                 setUser(response.data);
+                await AsyncStorage.setItem("user", JSON.stringify(response.data));
                 Alert.alert("Login Successful", "Welcome back!");
                 if (selected === "farmer") {
                     router.replace("/(tabs)"); // Replace "Home" with your farmer home screen
                 } else {
-                    // navigation.navigate("LaborProfile"); // Replace with your labor profile screen
+                    router.replace("/(tabs)");// navigation.navigate("LaborProfile"); // Replace with your labor profile screen
                 }
             }
         } catch (err) {

@@ -1,0 +1,13 @@
+{
+    "inviteOthers": "Invite Others",
+    "name": "Name",
+    "email": "Email",
+    "enterName": "Enter name",
+    "enterEmail": "Enter email",
+    "sendInvitation": "Send Invitation",
+    "sending": "Sending...",
+    "invitationSent": "Invitation sent successfully!",
+    "invitationFailed": "Invitation failed!",
+    "errorOccurred": "An error occurred."
+  }
+  
